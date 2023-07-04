@@ -7,6 +7,9 @@
 
 ![](art/streamsupport-sf.png)
 
+This fork is simply to add Automatic-Module-Names for each module. This will be published on https://nexus.darkcube.eu/repository/dasbabypixel/.
+Also ported to gradle cuz im to dumb for maven
+
 streamsupport is a backport of the Java 8 `java.util.function` (functional interfaces) and `java.util.stream`
 (streams) API for Android and users of Java 6 or 7 supplemented with selected additions from `java.util.concurrent`
 which didn't exist back in Java 6.

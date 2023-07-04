@@ -1,0 +1,19 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+    }
+}
+rootProject.name = 'streamsupport'
+include 'src:cfuture'
+project(':src:cfuture').name = 'streamsupport-cfuture'
+include 'src:atomic'
+project(':src:atomic').name = 'streamsupport-atomic'
+include 'src:flow'
+project(':src:flow').name = 'streamsupport-flow'
+include 'src:literal'
+project(':src:literal').name = 'streamsupport-literal'
+
+gradle.allprojects { Project p ->
+    if (p != rootProject)
+        buildDir = rootProject.file('build').toPath().resolve(p.name).toString()
+}

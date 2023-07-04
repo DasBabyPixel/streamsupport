@@ -51,6 +51,7 @@
 					<archive>
 						<addMavenDescriptor>false</addMavenDescriptor>
 						<manifestEntries>
+							<Automatic-Module-Name>streamsupport.literal</Automatic-Module-Name>
 							<Archiver-Version/>
 							<Created-By/>
 							<Built-By/>

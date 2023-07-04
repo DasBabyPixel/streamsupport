@@ -1,0 +1,32 @@
+plugins {
+    id 'java-library'
+}
+
+gradle.beforeProject {
+    group = 'net.sourceforge.streamsupport'
+    version = '1.7.4'
+    it.repositories {
+        maven {
+            name = 'DarkCube-DasBabyPixel'
+            url 'https://nexus.darkcube.eu/repository/dasbabypixel/'
+        }
+    }
+}
+
+allprojects {
+    sourceSets.test {
+        java {
+            srcDirs = []
+        }
+    }
+}
+
+subprojects { Project p ->
+    sourceSets {
+        main {
+            java {
+                srcDirs = [p.file('java')]
+            }
+        }
+    }
+}
