@@ -1,5 +1,7 @@
 /.idea/
 /.gradle/
+/buildSrc/.gradle/
+/buildSrc/build/
 /build/
 /target/
 /.classpath
