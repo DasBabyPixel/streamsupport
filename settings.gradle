@@ -1,17 +1,23 @@
 pluginManagement {
     repositories {
         gradlePluginPortal()
+        mavenCentral()
     }
 }
+plugins {
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.4.0'
+}
+
 rootProject.name = 'streamsupport'
-include 'src:cfuture'
-project(':src:cfuture').name = 'streamsupport-cfuture'
-include 'src:atomic'
-project(':src:atomic').name = 'streamsupport-atomic'
-include 'src:flow'
-project(':src:flow').name = 'streamsupport-flow'
-include 'src:literal'
-project(':src:literal').name = 'streamsupport-literal'
+include 'streamsupport-cfuture'
+project(':streamsupport-cfuture').projectDir = file('src/cfuture')
+include 'streamsupport-atomic'
+project(':streamsupport-atomic').projectDir = file('src/atomic')
+include 'streamsupport-flow'
+project(':streamsupport-flow').projectDir = file('src/flow')
+include 'streamsupport-literal'
+project(':streamsupport-literal').projectDir = file('src/literal')
+
 
 gradle.allprojects { Project p ->
     if (p != rootProject)

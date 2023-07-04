@@ -24,9 +24,6 @@
  */
 package java8.util.function;
 
-import java8.util.function.BinaryOperator;
-import java8.util.function.DoubleUnaryOperator;
-
 /**
  * Represents an operation upon two {@code double}-valued operands and producing a
  * {@code double}-valued result.   This is the primitive type specialization of

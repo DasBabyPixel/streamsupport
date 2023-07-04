@@ -1,31 +1,89 @@
+import me.tatarka.RetrolambdaPlugin
+
 plugins {
     id 'java-library'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+    id 'maven-publish'
 }
+repositories {
+    mavenCentral()
+}
+apply plugin: RetrolambdaPlugin
 
 gradle.beforeProject {
-    group = 'net.sourceforge.streamsupport'
-    version = '1.7.4'
     it.repositories {
         maven {
-            name = 'DarkCube-DasBabyPixel'
+            name = 'DarkCube'
             url 'https://nexus.darkcube.eu/repository/dasbabypixel/'
         }
     }
 }
+getComponents().withType(AdhocComponentWithVariants.class).forEach { c ->
+    c.withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
+        skip()
+    }
+}
 
-allprojects {
-    sourceSets.test {
+allprojects { p ->
+    group = 'net.sourceforge.streamsupport'
+    version = '1.7.4'
+    pluginManager.withPlugin('java') {
+        sourceSets.test {
+            java {
+                srcDirs = []
+            }
+        }
+
         java {
-            srcDirs = []
+            toolchain {
+                languageVersion = JavaLanguageVersion.of(8)
+                vendor = JvmVendorSpec.ADOPTIUM
+            }
+            withSourcesJar()
+            withJavadocJar()
+            sourceCompatibility = JavaVersion.VERSION_1_6
+            targetCompatibility = JavaVersion.VERSION_1_6
+        }
+    }
+    pluginManager.withPlugin('maven-publish') {
+        publishing {
+            repositories {
+                maven {
+                    name = 'DarkCube'
+                    credentials PasswordCredentials
+                    url = 'https://nexus.darkcube.eu/repository/dasbabypixel/'
+                }
+            }
+            publications {
+                maven(MavenPublication) {
+                    from components.java
+                }
+            }
         }
     }
 }
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+retrolambda {
+    javaVersion = JavaVersion.VERSION_1_6
+    launcher = javaToolchains.launcherFor {
+        languageVersion = JavaLanguageVersion.of(8)
+        vendor = JvmVendorSpec.ADOPTIUM
+    }.get()
+    incremental true
+}
+
 subprojects { Project p ->
-    sourceSets {
-        main {
-            java {
-                srcDirs = [p.file('java')]
+    pluginManager.withPlugin('java') {
+        sourceSets {
+            main {
+                java {
+                    srcDirs = [p.file('java')]
+                }
             }
         }
     }
